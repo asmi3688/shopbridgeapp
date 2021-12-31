@@ -1,0 +1,26 @@
+version: "3"
+services:
+       shop-bridge-latest:
+           container_name: shop-bridge-latest
+           image: latest/shop-bridge-latest
+           restart: always
+           build: .
+           ports:
+             - "4000:4000"
+           depends_on:
+             - mongo
+           networks: 
+             - shopbridge-app  
+       mongo:
+             container_name: mongo
+             image: mongo
+             volumes:
+               - ./data:/data/db
+             ports:
+               - '27017:27017'
+             networks: 
+               - shopbridge-app
+networks:
+       shopbridge-app:
+             driver: bridge
+               
